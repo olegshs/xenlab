@@ -196,6 +196,7 @@ const it: Messages = {
   'gen.newSeedHint': 'Genera un nuovo brano',
   'gen.nowPlaying': 'In riproduzione: {section}',
   'gen.idle': 'Premi «Riproduci» per ascoltare.',
+  'gen.queued': 'cambio alla prossima battuta',
   'gen.pumpTempered': 'Questa accordatura tempera il comma sintonico 81/80: dopo ogni ciclo la tonica torna alla stessa altezza.',
   'gen.pumpDrift': 'Questa accordatura non tempera 81/80: la tonica si sposta di {steps} passi ({cents} ¢) a ogni ciclo.',
   'gen.pumpJi': 'Nell’intonazione naturale pura la tonica scenderebbe di {comma} ¢ (81/80) a ogni ciclo.',

@@ -196,6 +196,7 @@ const zh: Messages = {
   'gen.newSeedHint': '生成一首新曲',
   'gen.nowPlaying': '正在播放：{section}',
   'gen.idle': '点击“播放”试听。',
+  'gen.queued': '将在下一小节切换',
   'gen.pumpTempered': '该律制消除了普通音差 81/80：每个循环后主音回到相同音高。',
   'gen.pumpDrift': '该律制没有消除 81/80：每个循环主音移动 {steps} 步（{cents} 音分）。',
   'gen.pumpJi': '在纯律中，每个循环主音会下降 {comma} 音分（81/80）。',

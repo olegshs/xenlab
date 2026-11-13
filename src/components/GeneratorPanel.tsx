@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { engine } from '../audio/instance';
 import { useT, type T } from '../i18n';
 import { demoScore, pieceScore, pumpScore, signed, type Score, type SectionLabel, type Texture } from '../music/generator';
-import { play, setLoop, setTempo, stop, useSequencer } from '../music/sequencer';
+import { play, playNext, setLoop, setTempo, stop, useSequencer } from '../music/sequencer';
 import { availableChords, chordDegrees, intervalCents, pumpDrift, SYNTONIC_COMMA, type ChordFit } from '../music/theory';
 import { randomSeed, useStore, type GeneratorMode } from '../state/store';
 import { freqOf } from '../tuning/frequency';
@@ -42,21 +42,22 @@ export function GeneratorPanel() {
   const tuning = useStore((s) => s.tuning);
   const gen = useStore((s) => s.generator);
   const setGenerator = useStore((s) => s.setGenerator);
-  const { playing, section } = useSequencer();
+  const { playing, section, queued } = useSequencer();
   const chords = useMemo(() => availableChords(tuning, 0), [tuning]);
   const drift = useMemo(() => pumpDrift(tuning), [tuning]);
   const canPlay = gen.mode !== 'pump' || drift !== null;
 
-  const start = (settings = gen) => {
+  /** Starts playback, or with `next` switches to the new score at the next bar line. */
+  const start = (settings = gen, next = false) => {
     engine.ensure();
     const score = buildScore(useStore.getState().tuning, settings);
-    if (score) play(score, { tempo: settings.tempo, loop: settings.loop });
+    if (score) (next ? playNext : play)(score, { tempo: settings.tempo, loop: settings.loop });
   };
 
-  /** Changes settings that affect the score; restarts playback with the new score if it is playing. */
+  /** Changes settings that affect the score; while playing, the new score takes over at the next bar. */
   const update = (patch: Partial<typeof gen>) => {
     setGenerator(patch);
-    if (playing) start({ ...gen, ...patch });
+    if (playing) start({ ...gen, ...patch }, true);
   };
 
   return (
@@ -162,6 +163,7 @@ export function GeneratorPanel() {
 
       <p className="now-playing" aria-live="polite">
         {section ? t('gen.nowPlaying', { section: sectionText(section, t) }) : t('gen.idle')}
+        {queued && <span className="queued"> · {t('gen.queued')}</span>}
       </p>
 
       <h3 className="sub-title">{t('gen.chords')}</h3>

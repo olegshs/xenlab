@@ -196,6 +196,7 @@ const ja: Messages = {
   'gen.newSeedHint': '新しい曲を生成',
   'gen.nowPlaying': '再生中：{section}',
   'gen.idle': '「再生」を押すと聴けます。',
+  'gen.queued': '次の小節から切り替え',
   'gen.pumpTempered': 'この音律はシントニック・コンマ 81/80 を消去します：各サイクル後に主音は同じ高さに戻ります。',
   'gen.pumpDrift': 'この音律は 81/80 を消去しません：主音はサイクルごとに {steps} ステップ（{cents} セント）ずれます。',
   'gen.pumpJi': '純正律では主音はサイクルごとに {comma} セント（81/80）下がります。',

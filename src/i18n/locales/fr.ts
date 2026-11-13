@@ -196,6 +196,7 @@ const fr: Messages = {
   'gen.newSeedHint': 'Générer un nouveau morceau',
   'gen.nowPlaying': 'En cours : {section}',
   'gen.idle': 'Appuyez sur « Jouer » pour écouter.',
+  'gen.queued': 'changement à la prochaine mesure',
   'gen.pumpTempered': 'Cet accordage tempère le comma syntonique 81/80 : après chaque cycle, la tonique revient à la même hauteur.',
   'gen.pumpDrift': 'Cet accordage ne tempère pas 81/80 : la tonique se décale de {steps} pas ({cents} ¢) à chaque cycle.',
   'gen.pumpJi': 'En intonation juste pure, la tonique descendrait de {comma} ¢ (81/80) à chaque cycle.',

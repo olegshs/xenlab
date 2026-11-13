@@ -55,6 +55,9 @@ export interface PieceOptions {
   texture: Texture;
 }
 
+/** Generated music is in 4/4; the sequencer switches between scores on bar lines. */
+export const BEATS_PER_BAR = 4;
+
 const GAIN = { melody: 1, chord: 0.5, bass: 0.7 } as const;
 
 /** "+1.9" / "−3.4" with a real minus sign. */
@@ -312,7 +315,7 @@ export function pieceScore(t: Tuning, { seed, bars, texture }: PieceOptions): Sc
   let prevMelody = melodyPool[Math.floor(melodyPool.length / 2)] ?? n;
 
   progression.forEach((fit, bar) => {
-    const start = bar * 4;
+    const start = bar * BEATS_PER_BAR;
     const last = bar === progression.length - 1;
     b.section(
       {
@@ -349,7 +352,7 @@ export function pieceScore(t: Tuning, { seed, bars, texture }: PieceOptions): Sc
       prevMelody = melodyBar(t, b, start, tones, prevMelody, melodyPool, last, random);
     }
   });
-  b.time = progression.length * 4;
+  b.time = progression.length * BEATS_PER_BAR;
   return b.build();
 }
 

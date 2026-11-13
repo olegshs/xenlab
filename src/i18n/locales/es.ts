@@ -196,6 +196,7 @@ const es: Messages = {
   'gen.newSeedHint': 'Generar una pieza nueva',
   'gen.nowPlaying': 'Suena ahora: {section}',
   'gen.idle': 'Pulsa «Reproducir» para escuchar.',
+  'gen.queued': 'cambio en el próximo compás',
   'gen.pumpTempered': 'Esta afinación tempera la coma sintónica 81/80: tras cada ciclo la tónica vuelve a la misma altura.',
   'gen.pumpDrift': 'Esta afinación no tempera la coma 81/80: la tónica se desplaza {steps} pasos ({cents} ¢) en cada ciclo.',
   'gen.pumpJi': 'En entonación justa pura la tónica bajaría {comma} ¢ (81/80) en cada ciclo.',

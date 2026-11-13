@@ -759,6 +759,9 @@ button.danger-solid {
   font-size: 13px;
   min-height: 2.6em;
 }
+.now-playing .queued {
+  color: var(--muted);
+}
 .pump-info p {
   margin: 0 0 4px;
 }

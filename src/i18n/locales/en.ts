@@ -195,6 +195,7 @@ const en = {
   'gen.newSeedHint': 'Generate a new piece',
   'gen.nowPlaying': 'Now playing: {section}',
   'gen.idle': 'Press Play to listen.',
+  'gen.queued': 'switching at the next bar',
   'gen.pumpTempered': 'This tuning tempers out the syntonic comma 81/80: after each cycle the tonic returns to the same pitch.',
   'gen.pumpDrift': 'This tuning does not temper out 81/80: the tonic moves by {steps} steps ({cents} ¢) every cycle.',
   'gen.pumpJi': 'In pure just intonation the tonic would drop by {comma} ¢ (81/80) every cycle.',

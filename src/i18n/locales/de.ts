@@ -196,6 +196,7 @@ const de: Messages = {
   'gen.newSeedHint': 'Ein neues Stück erzeugen',
   'gen.nowPlaying': 'Jetzt zu hören: {section}',
   'gen.idle': 'Zum Anhören auf „Abspielen“ drücken.',
+  'gen.queued': 'Wechsel ab dem nächsten Takt',
   'gen.pumpTempered': 'Diese Stimmung temperiert das syntonische Komma 81/80 weg: Nach jedem Durchlauf kehrt die Tonika auf dieselbe Tonhöhe zurück.',
   'gen.pumpDrift': 'Diese Stimmung temperiert 81/80 nicht: Die Tonika verschiebt sich pro Durchlauf um {steps} Schritte ({cents} Cent).',
   'gen.pumpJi': 'In reiner Stimmung würde die Tonika pro Durchlauf um {comma} Cent (81/80) sinken.',
