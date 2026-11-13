@@ -7,6 +7,24 @@ interface Active {
   degree: number;
   /** The key is physically held (false: sounding only because of sustain). */
   held: boolean;
+  /** AudioContext time the note starts (later than now for scheduled notes). */
+  startAt: number;
+  /** AudioContext time of a scheduled release, if any. */
+  endAt?: number;
+}
+
+export interface NoteOnOptions {
+  /** Start time on the AudioContext clock; defaults to now. */
+  when?: number;
+  /** Relative loudness, 0..1. */
+  gain?: number;
+}
+
+export interface NoteOffOptions {
+  /** Release time on the AudioContext clock; defaults to now. */
+  when?: number;
+  /** Release even while the sustain pedal is down. */
+  force?: boolean;
 }
 
 export type SampleStatus =
@@ -53,7 +71,11 @@ export class AudioEngine {
 
   private makeSnapshot(piano: SampleStatus, custom: SampleStatus): EngineSnapshot {
     const active = new Map<string, number>();
-    for (const [id, a] of this.voices) active.set(id, a.degree);
+    // Scheduled notes count as sounding only between their start and release.
+    const now = (this.ctx?.currentTime ?? 0) + 0.01;
+    for (const [id, a] of this.voices) {
+      if (a.startAt <= now && (a.endAt === undefined || a.endAt > now)) active.set(id, a.degree);
+    }
     return { active, sustain: this.sustain, piano, custom, running: this.ctx?.state === 'running' };
   }
   private emit(patch: Partial<Pick<EngineSnapshot, 'piano' | 'custom'>> = {}) {
@@ -108,10 +130,10 @@ export class AudioEngine {
     return wave;
   }
 
-  private createVoice(freq: number): Voice | null {
+  private createVoice(freq: number, when?: number, gain = 1): Voice | null {
     const ctx = this.ensure();
     const s = this.settings;
-    const vc = { ctx, out: this.master!, env: s, peak: VOICE_PEAK };
+    const vc = { ctx, out: this.master!, env: s, peak: VOICE_PEAK * gain, when };
     switch (s.engine) {
       case 'osc':
         return oscillatorVoice(vc, freq, s.wave, s.cutoff);
@@ -126,21 +148,34 @@ export class AudioEngine {
   }
 
   // ---------- notes ----------
-  noteOn(id: string, degree: number, freq: number) {
+  noteOn(id: string, degree: number, freq: number, { when, gain = 1 }: NoteOnOptions = {}) {
     if (!Number.isFinite(freq) || freq <= 0 || freq > 22000) return;
+    const ctx = this.ensure();
     const prev = this.voices.get(id);
-    if (prev) this.releaseVoice(prev.voice);
-    const voice = this.createVoice(freq);
+    if (prev) this.releaseVoice(prev.voice, when);
+    const voice = this.createVoice(freq, when, gain);
     if (!voice) return;
-    this.voices.set(id, { voice, degree, held: true });
-    this.emit();
+    const startAt = Math.max(when ?? 0, ctx.currentTime);
+    this.voices.set(id, { voice, degree, held: true, startAt });
+    this.emitAt(startAt);
   }
 
-  noteOff(id: string, force = false) {
+  noteOff(id: string, { when, force = false }: NoteOffOptions = {}) {
     const a = this.voices.get(id);
-    if (!a) return;
+    if (!a || !this.ctx) return;
     if (this.sustain && !force) {
       a.held = false;
+      return;
+    }
+    const at = Math.max(when ?? 0, this.ctx.currentTime);
+    if (at > this.ctx.currentTime + 0.005) {
+      // Scheduled release: keep the note listed until then so highlighting stays in sync.
+      a.endAt = at;
+      this.releaseVoice(a.voice, at);
+      setTimeout(() => {
+        if (this.voices.get(id) === a) this.voices.delete(id);
+        this.emit();
+      }, (at - this.ctx.currentTime) * 1000);
       return;
     }
     this.voices.delete(id);
@@ -152,11 +187,31 @@ export class AudioEngine {
     return this.voices.has(id);
   }
 
-  private releaseVoice(v: Voice) {
+  /** Emits now, and again when a scheduled note actually starts. */
+  private emitAt(time: number) {
+    this.emit();
+    const delay = this.ctx ? time - this.ctx.currentTime : 0;
+    if (delay > 0.005) setTimeout(() => this.emit(), delay * 1000);
+  }
+
+  private releaseVoice(v: Voice, when?: number) {
     if (!this.ctx) return;
-    const end = v.release(this.ctx.currentTime);
+    const end = v.release(Math.max(when ?? 0, this.ctx.currentTime));
     this.releasing.add(v);
     setTimeout(() => this.releasing.delete(v), (end - this.ctx.currentTime) * 1000 + 100);
+  }
+
+  /** Stops notes whose id matches: sounding ones are released, not-yet-started ones are dropped. */
+  stopWhere(match: (id: string) => boolean) {
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    for (const [id, a] of this.voices) {
+      if (!match(id)) continue;
+      this.voices.delete(id);
+      if (a.startAt > now + 0.005) a.voice.dispose();
+      else this.releaseVoice(a.voice);
+    }
+    this.emit();
   }
 
   setSustain(on: boolean) {

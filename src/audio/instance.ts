@@ -12,7 +12,7 @@ function syncDrone(on: boolean) {
   if (on) {
     if (!engine.isActive(DRONE_ID)) engine.noteOn(DRONE_ID, 0, freqOf(tuning, 0));
   } else {
-    engine.noteOff(DRONE_ID, true);
+    engine.noteOff(DRONE_ID, { force: true });
   }
 }
 
@@ -22,8 +22,17 @@ useStore.subscribe((s, prev) => {
   if (s.drone !== prev.drone) syncDrone(s.drone);
 });
 
-/** Panic: silence and switch the drone off. */
+const panicListeners = new Set<() => void>();
+
+/** Registers a callback run on panic (e.g. to stop the sequencer). Returns an unsubscribe function. */
+export function onPanic(fn: () => void) {
+  panicListeners.add(fn);
+  return () => panicListeners.delete(fn);
+}
+
+/** Panic: silence, stop playback and switch the drone off. */
 export function panic() {
+  panicListeners.forEach((fn) => fn());
   engine.allOff();
   useStore.getState().setDrone(false);
 }

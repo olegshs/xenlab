@@ -728,3 +728,43 @@ button.danger-solid {
     display: none;
   }
 }
+
+/* ---------- generator ---------- */
+.gen-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}
+.gen-options .seed input {
+  width: 90px;
+}
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.check input {
+  accent-color: var(--accent);
+}
+.now-playing {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  font-size: 13px;
+  min-height: 2.6em;
+}
+.pump-info p {
+  margin: 0 0 4px;
+}
+.sub-title {
+  margin: 4px 0 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+}
+table.chords td {
+  padding: 4px 8px;
+}

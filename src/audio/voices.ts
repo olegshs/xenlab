@@ -6,16 +6,18 @@ interface VoiceCtx {
   out: AudioNode;
   env: Adsr;
   peak: number;
+  /** Start time on the AudioContext clock; defaults to now. */
+  when?: number;
 }
 
 /** Oscillator (or PeriodicWave) → [lowpass] → envelope. */
 export function oscillatorVoice(
-  { ctx, out, env, peak }: VoiceCtx,
+  { ctx, out, env, peak, when }: VoiceCtx,
   freq: number,
   wave: OscillatorType | PeriodicWave,
   cutoff: number,
 ): Voice {
-  const now = ctx.currentTime;
+  const now = Math.max(when ?? 0, ctx.currentTime);
   const osc = ctx.createOscillator();
   if (wave instanceof PeriodicWave) osc.setPeriodicWave(wave);
   else osc.type = wave;
@@ -63,13 +65,13 @@ export function oscillatorVoice(
 }
 
 /** Plays the sample nearest in pitch with playbackRate = f / fSample. */
-export function samplerVoice({ ctx, out, env, peak }: VoiceCtx, freq: number, samples: Sample[]): Voice | null {
+export function samplerVoice({ ctx, out, env, peak, when }: VoiceCtx, freq: number, samples: Sample[]): Voice | null {
   if (samples.length === 0) return null;
   let best = samples[0];
   for (const s of samples) {
     if (Math.abs(Math.log2(s.freq / freq)) < Math.abs(Math.log2(best.freq / freq))) best = s;
   }
-  const now = ctx.currentTime;
+  const now = Math.max(when ?? 0, ctx.currentTime);
   const src = ctx.createBufferSource();
   src.buffer = best.buffer;
   src.playbackRate.setValueAtTime(freq / best.freq, now);

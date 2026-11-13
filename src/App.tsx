@@ -1,5 +1,6 @@
 import { engine, panic, useEngine } from './audio/instance';
 import { KeyboardView } from './components/KeyboardView';
+import { GeneratorPanel } from './components/GeneratorPanel';
 import { LayoutPanel } from './components/LayoutPanel';
 import { NoteTable } from './components/NoteTable';
 import { PresetsPanel } from './components/PresetsPanel';
@@ -108,6 +109,7 @@ export function App() {
           </div>
           <div className="col wide">
             <NoteTable />
+            <GeneratorPanel />
           </div>
           <div className="col">
             <LayoutPanel />

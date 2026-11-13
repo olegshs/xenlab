@@ -4,6 +4,7 @@ import type { SoundSettings } from '../audio/types';
 import { ALL_KEYS } from '../keyboard/layouts';
 import { isoPresetSteps, keyDegree, type LayoutSettings } from '../keyboard/mapping';
 import { edo } from '../tuning/generators';
+import type { Texture } from '../music/generator';
 import type { NoteNaming } from '../tuning/noteNames';
 import type { Tuning } from '../tuning/types';
 
@@ -13,6 +14,20 @@ export interface Preset {
   tuning: Tuning;
   layout: LayoutSettings;
 }
+
+export type GeneratorMode = 'demo' | 'piece' | 'pump';
+
+export interface GeneratorSettings {
+  mode: GeneratorMode;
+  texture: Texture;
+  /** Beats per minute. */
+  tempo: number;
+  bars: number;
+  seed: number;
+  loop: boolean;
+}
+
+export const randomSeed = () => 1 + Math.floor(Math.random() * 99999);
 
 export interface AppState {
   tuning: Tuning;
@@ -25,6 +40,7 @@ export interface AppState {
   editScope: 'class' | 'note';
   /** How 12-TET note names are shown: C D E or Do Re Mi. */
   noteNaming: NoteNaming;
+  generator: GeneratorSettings;
   userPresets: Preset[];
   /** Bumped by resetSettings so the UI can remount and drop local form state. Not persisted. */
   resetCount: number;
@@ -41,6 +57,7 @@ export interface AppState {
   setTablePeriod(p: number): void;
   setEditScope(s: 'class' | 'note'): void;
   setNoteNaming(n: NoteNaming): void;
+  setGenerator(patch: Partial<GeneratorSettings>): void;
   savePreset(name: string): void;
   deletePreset(id: string): void;
   loadPreset(p: Preset): void;
@@ -85,7 +102,7 @@ const initialLayout = fitLayout(initialTuning, {
   transpose: 0,
 });
 
-type Settings = Pick<AppState, 'tuning' | 'layout' | 'sound' | 'drone' | 'tablePeriod' | 'editScope' | 'noteNaming'>;
+type Settings = Pick<AppState, 'tuning' | 'layout' | 'sound' | 'drone' | 'tablePeriod' | 'editScope' | 'noteNaming' | 'generator'>;
 
 /** Fresh copies of all default settings. */
 function defaultSettings(): Settings {
@@ -97,6 +114,7 @@ function defaultSettings(): Settings {
     tablePeriod: 0,
     editScope: 'class',
     noteNaming: 'letters',
+    generator: { mode: 'demo', texture: 'chorale', tempo: 90, bars: 8, seed: randomSeed(), loop: false },
   };
 }
 
@@ -178,6 +196,7 @@ export const useStore = create<AppState>()(
       setTablePeriod: (p) => set({ tablePeriod: p }),
       setEditScope: (editScope) => set({ editScope }),
       setNoteNaming: (noteNaming) => set({ noteNaming }),
+      setGenerator: (patch) => set((s) => ({ generator: { ...s.generator, ...patch } })),
 
       savePreset: (name) => {
         const { tuning, layout, userPresets } = get();
@@ -223,6 +242,7 @@ export const useStore = create<AppState>()(
         sound: s.sound,
         editScope: s.editScope,
         noteNaming: s.noteNaming,
+        generator: s.generator,
         userPresets: s.userPresets,
       }),
       merge: (persisted, current) => {
@@ -232,6 +252,7 @@ export const useStore = create<AppState>()(
           ...p,
           sound: { ...current.sound, ...p.sound },
           layout: { ...current.layout, ...p.layout },
+          generator: { ...current.generator, ...p.generator },
         };
       },
     },
