@@ -35,7 +35,7 @@ const he: Messages = {
   'common.degrees': 'דרגות: {n}',
 
   'kb.label': 'מקלדת',
-  'kb.keyTitle': '{key} — דרגה {cls}, מחזור {period}, {freq} Hz',
+  'kb.keyTitle': '{key} – דרגה {cls}, מחזור {period}, {freq} Hz',
 
   'notes.title': 'דרגות הסולם',
   'notes.resetAll': 'איפוס שינויים',

@@ -35,7 +35,7 @@ const fr: Messages = {
   'common.degrees': '{n} degrés',
 
   'kb.label': 'Clavier',
-  'kb.keyTitle': '{key} — degré {cls}, période {period}, {freq} Hz',
+  'kb.keyTitle': '{key} – degré {cls}, période {period}, {freq} Hz',
 
   'notes.title': 'Degrés de la gamme',
   'notes.resetAll': 'Annuler les retouches',

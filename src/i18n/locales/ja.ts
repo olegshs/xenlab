@@ -35,7 +35,7 @@ const ja: Messages = {
   'common.degrees': '{n} 音',
 
   'kb.label': 'キーボード',
-  'kb.keyTitle': '{key} — {cls} 度、周期 {period}、{freq} Hz',
+  'kb.keyTitle': '{key} – {cls} 度、周期 {period}、{freq} Hz',
 
   'notes.title': '音階の各音',
   'notes.resetAll': '調整をリセット',

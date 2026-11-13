@@ -35,7 +35,7 @@ const de: Messages = {
   'common.degrees': '{n} Stufen',
 
   'kb.label': 'Tastatur',
-  'kb.keyTitle': '{key} — Stufe {cls}, Periode {period}, {freq} Hz',
+  'kb.keyTitle': '{key} – Stufe {cls}, Periode {period}, {freq} Hz',
 
   'notes.title': 'Tonstufen',
   'notes.resetAll': 'Änderungen zurücksetzen',

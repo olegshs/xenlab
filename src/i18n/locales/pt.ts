@@ -35,7 +35,7 @@ const pt: Messages = {
   'common.degrees': '{n} graus',
 
   'kb.label': 'Teclado',
-  'kb.keyTitle': '{key} — grau {cls}, período {period}, {freq} Hz',
+  'kb.keyTitle': '{key} – grau {cls}, período {period}, {freq} Hz',
 
   'notes.title': 'Graus da escala',
   'notes.resetAll': 'Desfazer ajustes',

@@ -23,7 +23,7 @@ export interface LangInfo {
 
 /**
  * Order shown in the language picker: alphabetical by native name, the usual convention
- * for language switchers — Latin-script names first, then Cyrillic, Hebrew, Arabic and CJK
+ * for language switchers – Latin-script names first, then Cyrillic, Hebrew, Arabic and CJK
  * (the same order Intl.Collator gives).
  */
 export const LANGS = [
@@ -77,7 +77,7 @@ function applyToDocument(lang: Lang) {
   document.documentElement.lang = lang;
   document.documentElement.dir = info.dir;
   const t = makeT(lang);
-  document.title = `${t('app.title')} — ${t('app.subtitle')}`;
+  document.title = `${t('app.title')} – ${t('app.subtitle')}`;
 }
 
 interface LangState {

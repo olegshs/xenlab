@@ -35,7 +35,7 @@ const zh: Messages = {
   'common.degrees': '{n} 个音级',
 
   'kb.label': '键盘',
-  'kb.keyTitle': '{key} — 第 {cls} 级，周期 {period}，{freq} Hz',
+  'kb.keyTitle': '{key} – 第 {cls} 级，周期 {period}，{freq} Hz',
 
   'notes.title': '音阶各级',
   'notes.resetAll': '撤销修改',

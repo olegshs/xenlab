@@ -35,7 +35,7 @@ const ar: Messages = {
   'common.degrees': 'عدد الدرجات: {n}',
 
   'kb.label': 'لوحة المفاتيح',
-  'kb.keyTitle': '{key} — الدرجة {cls}، الدورة {period}، {freq} Hz',
+  'kb.keyTitle': '{key} – الدرجة {cls}، الدورة {period}، {freq} Hz',
 
   'notes.title': 'درجات السلم',
   'notes.resetAll': 'إلغاء التعديلات',

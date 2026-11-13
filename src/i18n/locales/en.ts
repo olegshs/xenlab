@@ -34,7 +34,7 @@ const en = {
   'common.degrees': '{n} degrees',
 
   'kb.label': 'Keyboard',
-  'kb.keyTitle': '{key} — degree {cls}, period {period}, {freq} Hz',
+  'kb.keyTitle': '{key} – degree {cls}, period {period}, {freq} Hz',
 
   'notes.title': 'Scale degrees',
   'notes.resetAll': 'Reset edits',
