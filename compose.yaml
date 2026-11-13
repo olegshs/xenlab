@@ -1,0 +1,18 @@
+# Builds the image from the Dockerfile and serves XenLab on http://localhost:8080.
+# Change the host port with XENLAB_PORT, e.g. `XENLAB_PORT=3000 docker compose up -d`.
+services:
+  xenlab:
+    build: .
+    image: xenlab:latest
+    container_name: xenlab
+    ports:
+      - "${XENLAB_PORT:-8080}:8080"
+    restart: unless-stopped
+    # nginx-unprivileged only writes to /tmp (pid and temp files), so the rest can be read-only.
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
