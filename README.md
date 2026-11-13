@@ -53,6 +53,18 @@ Other scripts:
 | `npm run typecheck` | TypeScript check |
 | `npm run build` | Type-check and build the static site into `dist/` |
 | `npm run preview` | Serve the built `dist/` locally |
+| `npm run images` | Regenerate the favicon, app icons and the social preview image in `public/` (needs Chrome or Edge; set `CHROME_PATH` if it is not found) |
+
+## Configuration
+
+Build-time settings live in [.env](.env). Override them in `.env.local` (not committed), in the environment, or as Docker build arguments.
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `VITE_SOURCE_URL` | https://github.com/olegshs/xenlab | The **Source code** link in the footer. If you deploy a modified version, point it to your own source, as the AGPL requires. Empty hides the link. |
+| `VITE_SITE_URL` | (empty) | Public address of the site, e.g. `https://xenlab.example.com`. Makes the preview image URL absolute and adds `og:url` and a canonical link, which social networks need for link previews. |
+
+The description, Open Graph and Twitter card tags are generated at build time by the `shareMeta` plugin in [vite.config.ts](vite.config.ts).
 
 ## Docker
 
@@ -68,6 +80,14 @@ Open http://localhost:8080. To use another host port:
 XENLAB_PORT=3000 docker compose up -d
 ```
 
+To set the public address (and optionally another source link), pass them when building:
+
+```bash
+XENLAB_SITE_URL=https://xenlab.example.com docker compose up -d --build
+```
+
+`XENLAB_SOURCE_URL` works the same way. With plain Docker use `--build-arg VITE_SITE_URL=…` and `--build-arg VITE_SOURCE_URL=…`.
+
 Without Compose:
 
 ```bash
@@ -80,6 +100,8 @@ docker run --rm -p 8080:8080 xenlab
 ## Project structure
 
 ```
+public/        favicon, app icons, web manifest and the social preview image (see npm run images)
+scripts/       render-images.mjs: generates the images in public/
 src/
   tuning/      tuning model, generators (EDO, EDx, lists), Scala parser, ratios, note names, presets
   music/       chord theory, score generators (demo, piece, comma pump), lookahead sequencer

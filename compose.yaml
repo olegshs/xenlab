@@ -1,8 +1,15 @@
 # Builds the image from the Dockerfile and serves XenLab on http://localhost:8080.
-# Change the host port with XENLAB_PORT, e.g. `XENLAB_PORT=3000 docker compose up -d`.
+#   XENLAB_PORT        host port (default 8080)
+#   XENLAB_SITE_URL    public address, for sharing previews (default: none)
+#   XENLAB_SOURCE_URL  source code link (default: the one in .env)
+# Example: XENLAB_SITE_URL=https://xenlab.example.com docker compose up -d --build
 services:
   xenlab:
-    build: .
+    build:
+      context: .
+      args:
+        VITE_SITE_URL: ${XENLAB_SITE_URL:-}
+        VITE_SOURCE_URL: ${XENLAB_SOURCE_URL:-}
     image: xenlab:latest
     container_name: xenlab
     ports:

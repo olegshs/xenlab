@@ -4,7 +4,7 @@ import { GeneratorPanel } from './components/GeneratorPanel';
 import { LayoutPanel } from './components/LayoutPanel';
 import { NoteTable } from './components/NoteTable';
 import { PresetsPanel } from './components/PresetsPanel';
-import { ResetFooter } from './components/ResetFooter';
+import { Footer } from './components/Footer';
 import { SoundPanel } from './components/SoundPanel';
 import { TuningPanel } from './components/TuningPanel';
 import { Segmented } from './components/ui';
@@ -117,7 +117,7 @@ export function App() {
           </div>
         </div>
       </main>
-      <ResetFooter />
+      <Footer />
     </div>
   );
 }
