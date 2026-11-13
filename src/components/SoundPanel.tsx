@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { track } from '../analytics';
 import type { SampleStatus } from '../audio/engine';
 import { engine, useEngine } from '../audio/instance';
 import type { EngineKind } from '../audio/types';
@@ -49,6 +50,7 @@ export function SoundPanel() {
         onChange={(engineKind) => {
           engine.ensure();
           setSound({ engine: engineKind });
+          track('select_sound', { engine: engineKind });
         }}
         ariaLabel={t('sound.source')}
         options={[

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ANALYTICS_ENABLED, useConsent } from '../analytics';
 import { panic } from '../audio/instance';
 import { useT } from '../i18n';
 import { useStore } from '../state/store';
@@ -24,6 +25,11 @@ export function Footer() {
         <a href={LICENSE_URL} target="_blank" rel="noreferrer license" title="GNU Affero General Public License v3.0 or later">
           {t('app.license')}: AGPL-3.0
         </a>
+        {ANALYTICS_ENABLED && (
+          <button type="button" className="link" onClick={() => useConsent.getState().ask()}>
+            {t('consent.settings')}
+          </button>
+        )}
       </nav>
       <ResetControl />
     </footer>

@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { track } from '../analytics';
 import { errorText, useT } from '../i18n';
 import { useStore } from '../state/store';
 import { BUILTIN_TUNINGS, matchBuiltin } from '../tuning/builtins';
@@ -23,18 +24,19 @@ export function TuningPanel() {
   // any edit (degrees, base frequency, per-note changes) switches it back to the placeholder.
   const builtinId = useMemo(() => matchBuiltin(tuning), [tuning]);
 
-  const apply = (make: () => Tuning) => {
+  const apply = (method: Gen, make: () => Tuning) => {
     try {
       const next = make();
       setTuning({ ...next, baseFreq: tuning.baseFreq });
       setError(null);
+      track('create_tuning', { method, size: next.stepsCents.length });
     } catch (e) {
       setError(e);
     }
   };
 
   const applyScala = (text: string, name: string) =>
-    apply(() => {
+    apply('scala', () => {
       const s = parseScala(text);
       return fromScala(s, s.description || name);
     });
@@ -63,6 +65,7 @@ export function TuningPanel() {
             const next = b.make();
             setTuning({ ...next, name: b.labelKey ? t(b.labelKey) : (b.label ?? next.name) });
             setError(null);
+            track('select_tuning', { tuning: b.id });
             if (next.source.kind === 'edo' || next.source.kind === 'edx') setN(next.source.n);
             if (next.source.kind === 'edx') setIntervalText(next.source.interval);
           }}
@@ -98,7 +101,7 @@ export function TuningPanel() {
           className="gen"
           onSubmit={(e) => {
             e.preventDefault();
-            apply(() => edo(n));
+            apply('edo', () => edo(n));
           }}
         >
           <label className="field">
@@ -116,7 +119,7 @@ export function TuningPanel() {
           className="gen"
           onSubmit={(e) => {
             e.preventDefault();
-            apply(() => edx(n, interval.trim()));
+            apply('edx', () => edx(n, interval.trim()));
           }}
         >
           <label className="field">
@@ -145,7 +148,7 @@ export function TuningPanel() {
           className="gen column"
           onSubmit={(e) => {
             e.preventDefault();
-            apply(() => fromPitchList(t('tuning.customName'), list.split('\n')));
+            apply('list', () => fromPitchList(t('tuning.customName'), list.split('\n')));
           }}
         >
           <label className="field">

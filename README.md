@@ -63,8 +63,26 @@ Build-time settings live in [.env](.env). Override them in `.env.local` (not com
 |---|---|---|
 | `VITE_SOURCE_URL` | https://github.com/olegshs/xenlab | The **Source code** link in the footer. If you deploy a modified version, point it to your own source, as the AGPL requires. Empty hides the link. |
 | `VITE_SITE_URL` | (empty) | Public address of the site, e.g. `https://xenlab.example.com`. Makes the preview image URL absolute and adds `og:url` and a canonical link, which social networks need for link previews. |
+| `VITE_GA_ID` | (empty) | Google Analytics 4 measurement ID (`G-…`). Empty turns analytics off. Set it in `.env.local` or as a build argument rather than in `.env`, so that builds of forks do not report to your property. See [Analytics](#analytics). |
 
 The description, Open Graph and Twitter card tags are generated at build time by the `shareMeta` plugin in [vite.config.ts](vite.config.ts).
+
+## Analytics
+
+Off unless `VITE_GA_ID` is set. With it, visitors see a consent banner, and Google Analytics is loaded only after they allow it: before that no request goes to Google and no cookies are set. Ad features and Google signals are switched off. The **Analytics settings** link in the footer reopens the banner; declining stops sending and deletes the `_ga` cookies.
+
+Besides page views, the app sends these events (parameters in brackets):
+
+| Event | When |
+|---|---|
+| `audio_start` | sound starts for the first time in a visit |
+| `select_tuning` (`tuning`) | a built-in tuning is picked, e.g. `edo-31` |
+| `create_tuning` (`method`, `size`) | a tuning is built with N-EDO, EDx, a ratio list or Scala |
+| `select_sound` (`engine`) | the sound source changes: `osc`, `additive`, `sampler` |
+| `generator_play` (`mode`, `texture`) | the generator starts |
+| `set_language` (`language`) | the interface language changes |
+
+To see the parameters in GA reports, register them as custom dimensions (Admin → Custom definitions).
 
 ## Docker
 
@@ -86,7 +104,7 @@ To set the public address (and optionally another source link), pass them when b
 XENLAB_SITE_URL=https://xenlab.example.com docker compose up -d --build
 ```
 
-`XENLAB_SOURCE_URL` works the same way. With plain Docker use `--build-arg VITE_SITE_URL=…` and `--build-arg VITE_SOURCE_URL=…`.
+`XENLAB_SOURCE_URL` and `XENLAB_GA_ID` work the same way. With plain Docker use `--build-arg VITE_SITE_URL=…`, `--build-arg VITE_SOURCE_URL=…` and `--build-arg VITE_GA_ID=…`.
 
 Without Compose:
 

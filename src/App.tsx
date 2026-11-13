@@ -1,9 +1,12 @@
+import { useEffect } from 'react';
+import { track } from './analytics';
 import { engine, panic, useEngine } from './audio/instance';
 import { KeyboardView } from './components/KeyboardView';
 import { GeneratorPanel } from './components/GeneratorPanel';
 import { LayoutPanel } from './components/LayoutPanel';
 import { NoteTable } from './components/NoteTable';
 import { PresetsPanel } from './components/PresetsPanel';
+import { ConsentBanner } from './components/ConsentBanner';
 import { Footer } from './components/Footer';
 import { SoundPanel } from './components/SoundPanel';
 import { TuningPanel } from './components/TuningPanel';
@@ -13,6 +16,8 @@ import { useKeyboard } from './keyboard/useKeyboard';
 import { useStore } from './state/store';
 import type { NoteNaming } from './tuning/noteNames';
 import { useTheme, type ThemeMode } from './theme/useTheme';
+
+let audioStarted = false;
 
 export function App() {
   useKeyboard();
@@ -25,6 +30,14 @@ export function App() {
   const setNoteNaming = useStore((s) => s.setNoteNaming);
   const resetCount = useStore((s) => s.resetCount);
   const { mode, setMode } = useTheme();
+
+  // Once per visit: how many visitors actually get to hear something.
+  useEffect(() => {
+    if (running && !audioStarted) {
+      audioStarted = true;
+      track('audio_start');
+    }
+  }, [running]);
 
   return (
     <div className="app" onPointerDown={() => engine.ensure()}>
@@ -84,7 +97,10 @@ export function App() {
           <select
             className="lang-select"
             value={lang}
-            onChange={(e) => setLang(e.target.value as Lang)}
+            onChange={(e) => {
+              setLang(e.target.value as Lang);
+              track('set_language', { language: e.target.value });
+            }}
             aria-label={t('app.language')}
             title={t('app.language')}
           >
@@ -118,6 +134,7 @@ export function App() {
         </div>
       </main>
       <Footer />
+      <ConsentBanner />
     </div>
   );
 }

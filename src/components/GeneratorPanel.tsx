@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { track } from '../analytics';
 import { engine } from '../audio/instance';
 import { useT, type T } from '../i18n';
 import { demoScore, pieceScore, pumpScore, signed, type Score, type SectionLabel, type Texture } from '../music/generator';
@@ -68,7 +69,11 @@ export function GeneratorPanel() {
           type="button"
           className={playing ? 'toggle on' : 'accent'}
           disabled={!canPlay}
-          onClick={() => (playing ? stop() : start())}
+          onClick={() => {
+            if (playing) return stop();
+            start();
+            track('generator_play', gen.mode === 'piece' ? { mode: gen.mode, texture: gen.texture } : { mode: gen.mode });
+          }}
         >
           {playing ? `■ ${t('gen.stop')}` : `▶ ${t('gen.play')}`}
         </button>

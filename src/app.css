@@ -792,6 +792,16 @@ table.chords td {
 .footer-links a:hover {
   text-decoration: underline;
 }
+button.link {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: inherit;
+}
+button.link:hover:not(:disabled) {
+  text-decoration: underline;
+}
 .reset {
   display: flex;
   align-items: center;
@@ -805,4 +815,31 @@ table.chords td {
     justify-content: center;
     text-align: center;
   }
+}
+
+/* ---------- analytics consent ---------- */
+.consent {
+  position: fixed;
+  inset-inline: 16px;
+  bottom: 16px;
+  z-index: 20;
+  max-width: 520px;
+  margin-inline: auto;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow), 0 8px 24px rgb(0 0 0 / 0.12);
+  font-size: 13px;
+}
+.consent h2 {
+  margin: 0 0 6px;
+}
+.consent p {
+  margin: 0 0 10px;
+}
+/* The current choice when reopened; the accent "Allow" keeps its own look. */
+.consent button[aria-pressed='true']:not(.accent) {
+  background: var(--accent-soft);
+  border-color: var(--accent);
 }

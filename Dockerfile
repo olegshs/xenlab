@@ -12,13 +12,15 @@ COPY index.html tsconfig.json vite.config.ts .env ./
 COPY public ./public
 COPY src ./src
 
-# Optional overrides of the settings in .env (public site URL, source code URL).
+# Optional overrides of the settings in .env (public site URL, source code URL, GA4 measurement ID).
 ARG VITE_SITE_URL
 ARG VITE_SOURCE_URL
+ARG VITE_GA_ID
 # Empty build args are unset so they do not override the defaults from .env.
 # A failing test or type error stops the image build.
 RUN [ -n "$VITE_SITE_URL" ] || unset VITE_SITE_URL; \
     [ -n "$VITE_SOURCE_URL" ] || unset VITE_SOURCE_URL; \
+    [ -n "$VITE_GA_ID" ] || unset VITE_GA_ID; \
     npm test && npm run build
 
 # ---- Runtime: serve the static files with nginx as a non-root user ----
