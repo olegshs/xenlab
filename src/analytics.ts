@@ -8,7 +8,11 @@ import { create } from 'zustand';
  * sending off and deletes the GA cookies. Without VITE_GA_ID the whole feature is off.
  */
 const GA_ID = import.meta.env.VITE_GA_ID?.trim() ?? '';
-export const ANALYTICS_ENABLED = /^G-[A-Z0-9]{4,}$/.test(GA_ID);
+
+/** A GA4 measurement ID such as G-XXXXXXXXXX (vite.config.ts rejects anything else at build time). */
+export const isMeasurementId = (id: string) => /^G-[A-Z0-9]{4,}$/.test(id);
+
+export const ANALYTICS_ENABLED = isMeasurementId(GA_ID);
 
 export type Consent = 'granted' | 'denied';
 
