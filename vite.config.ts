@@ -47,8 +47,19 @@ function shareMeta(siteUrl: string): Plugin {
   return { name: 'xenlab-share-meta', transformIndexHtml: () => tags };
 }
 
+/** Fails the build on an ID the app would silently ignore (same check as ANALYTICS_ENABLED in src/analytics.ts). */
+function checkGaId(id: string) {
+  if (!id || /^G-[A-Z0-9]{4,}$/.test(id)) return;
+  const hint = id.startsWith('GTM-')
+    ? ' This is a Google Tag Manager container ID; use the measurement ID of the GA4 web data stream instead' +
+      ' (Google Analytics → Admin → Data streams).'
+    : '';
+  throw new Error(`VITE_GA_ID must be a GA4 measurement ID like G-XXXXXXXXXX, got "${id}".${hint}`);
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', 'VITE_');
+  checkGaId(env.VITE_GA_ID?.trim() ?? '');
   return {
     plugins: [react(), shareMeta(env.VITE_SITE_URL ?? '')],
     server: { port: 5173 },

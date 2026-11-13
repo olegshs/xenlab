@@ -63,7 +63,7 @@ Build-time settings live in [.env](.env). Override them in `.env.local` (not com
 |---|---|---|
 | `VITE_SOURCE_URL` | https://github.com/olegshs/xenlab | The **Source code** link in the footer. If you deploy a modified version, point it to your own source, as the AGPL requires. Empty hides the link. |
 | `VITE_SITE_URL` | (empty) | Public address of the site, e.g. `https://xenlab.example.com`. Makes the preview image URL absolute and adds `og:url` and a canonical link, which social networks need for link previews. |
-| `VITE_GA_ID` | (empty) | Google Analytics 4 measurement ID (`G-…`). Empty turns analytics off. Set it in `.env.local` or as a build argument rather than in `.env`, so that builds of forks do not report to your property. See [Analytics](#analytics). |
+| `VITE_GA_ID` | (empty) | Google Analytics 4 measurement ID (`G-…`, from Admin → Data streams; a Tag Manager `GTM-…` ID fails the build). Empty turns analytics off. Set it in `.env.local` or as a build argument rather than in `.env`, so that builds of forks do not report to your property. See [Analytics](#analytics). |
 
 The description, Open Graph and Twitter card tags are generated at build time by the `shareMeta` plugin in [vite.config.ts](vite.config.ts).
 
