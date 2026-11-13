@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XenLab</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎹</text></svg>" />
+    <script>
+      // Apply theme and text direction before the first render to avoid a flash.
+      // Must stay in sync with src/theme/useTheme.ts and src/i18n/index.ts.
+      (function () {
+        var root = document.documentElement;
+        var mode = 'auto';
+        var lang = '';
+        try {
+          mode = localStorage.getItem('theme-mode') || 'auto';
+          lang = localStorage.getItem('lang') || '';
+        } catch (e) {}
+        var dark = mode === 'dark' || (mode !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        root.dataset.theme = dark ? 'dark' : 'light';
+        if (!lang) lang = (navigator.language || 'en').toLowerCase().split('-')[0];
+        if (lang === 'iw') lang = 'he';
+        if (lang === 'he' || lang === 'ar') root.dir = 'rtl';
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
