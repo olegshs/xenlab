@@ -1,4 +1,2 @@
-# Every crawler may index the whole site. With VITE_SITE_URL set, the build appends
-# a Sitemap line with the absolute sitemap URL (crawlerFiles in vite.config.ts).
 User-agent: *
 Allow: /
