@@ -37,6 +37,13 @@ const es: Messages = {
   'reset.cancel': 'Cancelar',
   'reset.done': 'Se han restablecido todos los ajustes.',
 
+  'about.title': 'Acerca de XenLab',
+  'about.intro': 'XenLab es un laboratorio microtonal gratuito en el navegador. La mayor parte de la música occidental divide la octava en 12 pasos iguales; con XenLab puedes construir otras afinaciones, oír cómo suenan y tocarlas, sin instalar nada ni crear una cuenta.',
+  'about.tunings': 'Una afinación puede ser N-EDO (división igual de la octava, como 19-EDO, 31-EDO o 53-EDO), EDx (división igual de otro intervalo, como Bohlen–Pierce: 13 pasos de la tritava 3/1), tu propia lista de cents o razones, o un archivo .scl de Scala. Entre las afinaciones predefinidas están la entonación justa, la afinación pitagórica y la serie armónica 8–16. La tabla de notas muestra cada grado en cents y Hz, la razón simple más cercana con su error y la nota de 12-TET más cercana.',
+  'about.play': 'Toca con el teclado del ordenador: las notas siguen la posición física de las teclas, no las letras, así que sirve cualquier distribución (QWERTY, AZERTY, QWERTZ…). Los grados van en orden a lo largo de las filas o forman una distribución isomórfica como Wicki–Hayden. También puedes hacer clic o tocar las teclas en pantalla. Los navegadores solo activan el sonido tras un clic o una pulsación de tecla, así que pulsa primero «{button}» o cualquier tecla.',
+  'about.generator': 'El generador toca música en la afinación actual: «{demo}» recorre la escala, sus intervalos característicos y todos los acordes que suenan bien en la afinación; «{piece}» compone una progresión de acordes con melodía, como coral o arpegios; «{pump}» toca I–vi–ii–V–I con intervalos puros, para que oigas si la afinación tempera la coma sintónica 81/80.',
+  'about.local': 'El sonido se sintetiza en el navegador con la Web Audio API: un oscilador con envolvente y filtro, síntesis aditiva o un piano muestreado. Las afinaciones y los preajustes se guardan en tu navegador y se pueden exportar como archivos JSON o .scl. XenLab es software libre con licencia AGPL-3.0.',
+
   'unit.hz': 'Hz',
   'unit.cents': '¢',
   'unit.ms': 'ms',

@@ -36,6 +36,14 @@ const en = {
   'reset.cancel': 'Cancel',
   'reset.done': 'All settings have been reset.',
 
+  /** Running text about the app below the panels; also what search engines index. */
+  'about.title': 'About XenLab',
+  'about.intro': 'XenLab is a free microtonal sandbox in the browser. Most Western music divides the octave into 12 equal steps; XenLab lets you build other tunings, hear how they sound and play them – nothing to install, no account needed.',
+  'about.tunings': 'A tuning can be N-EDO (an equal division of the octave, such as 19-EDO, 31-EDO or 53-EDO), EDx (an equal division of another interval, as in Bohlen–Pierce: 13 steps of the tritave 3/1), your own list of cents or ratios, or a Scala .scl file. Preset tunings include just intonation, Pythagorean tuning and harmonics 8–16. The note table shows every degree in cents and Hz, the nearest simple ratio with its error and the nearest 12-TET note.',
+  'about.play': 'Play from the computer keyboard: notes follow the physical position of the keys, not the letters, so any keyboard layout works (QWERTY, AZERTY, ЙЦУКЕН, …). Degrees run along the rows in order or in an isomorphic layout such as Wicki–Hayden. You can also click or tap the on-screen keys. Browsers start audio only after a click or key press, so press “{button}” or any key first.',
+  'about.generator': 'The generator plays music in the current tuning: “{demo}” goes through the scale, its characteristic intervals and every chord the tuning plays well; “{piece}” composes a chord progression with a melody, as a chorale or arpeggios; “{pump}” plays I–vi–ii–V–I from pure intervals, so you can hear whether the tuning tempers out the syntonic comma 81/80.',
+  'about.local': 'Sound is synthesized in the browser with the Web Audio API: an oscillator with an envelope and a filter, additive synthesis or a sampled piano. Tunings and presets are saved in your browser and can be exported as JSON or .scl files. XenLab is free software under the AGPL-3.0 license.',
+
   'unit.hz': 'Hz',
   'unit.cents': '¢',
   'unit.ms': 'ms',

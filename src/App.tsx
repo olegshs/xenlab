@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { track } from './analytics';
 import { engine, panic, useEngine } from './audio/instance';
+import { AboutSection } from './components/AboutSection';
 import { KeyboardView } from './components/KeyboardView';
 import { GeneratorPanel } from './components/GeneratorPanel';
 import { LayoutPanel } from './components/LayoutPanel';
@@ -132,6 +133,7 @@ export function App() {
             <SoundPanel />
           </div>
         </div>
+        <AboutSection />
       </main>
       <Footer />
       <ConsentBanner />

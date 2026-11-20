@@ -11,13 +11,17 @@ const SHARE = {
   imageHeight: 630,
 };
 
+const LICENSE_URL = 'https://www.gnu.org/licenses/agpl-3.0.html';
+
+/** VITE_SITE_URL without surrounding spaces and trailing slashes ('' when not set). */
+const normalizeSite = (siteUrl: string) => siteUrl.trim().replace(/\/+$/, '');
+
 /**
  * Adds description, Open Graph and Twitter card tags to index.html.
- * With VITE_SITE_URL set, links become absolute and og:url / canonical are added
- * (most social networks ignore relative image URLs).
+ * With VITE_SITE_URL set, links become absolute and og:url, canonical and schema.org data
+ * for search engines are added (most social networks ignore relative image URLs).
  */
-function shareMeta(siteUrl: string): Plugin {
-  const site = siteUrl.trim().replace(/\/+$/, '');
+function shareMeta(site: string): Plugin {
   const abs = (path: string) => (site ? `${site}${path}` : path);
   const meta = (attrs: Record<string, string>): HtmlTagDescriptor => ({ tag: 'meta', attrs, injectTo: 'head' });
   const og = (property: string, content: string | number) => meta({ property, content: String(content) });
@@ -43,9 +47,62 @@ function shareMeta(siteUrl: string): Plugin {
   ];
   if (site) {
     tags.push(og('og:url', `${site}/`), { tag: 'link', attrs: { rel: 'canonical', href: `${site}/` }, injectTo: 'head' });
+    const app = {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      name: 'XenLab',
+      url: `${site}/`,
+      description: SHARE.description,
+      image: abs(SHARE.image),
+      applicationCategory: 'MultimediaApplication',
+      operatingSystem: 'Any',
+      browserRequirements: 'Requires a browser with the Web Audio API',
+      isAccessibleForFree: true,
+      offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' },
+      license: LICENSE_URL,
+    };
+    // Escaping "<" keeps a "</script>" inside a string from ending the tag early.
+    const json = JSON.stringify(app).replace(/</g, '\\u003c');
+    tags.push({ tag: 'script', attrs: { type: 'application/ld+json' }, children: json, injectTo: 'head' });
   }
   return { name: 'xenlab-share-meta', transformIndexHtml: () => tags };
 }
+
+/**
+ * With VITE_SITE_URL set, emits sitemap.xml and a copy of public/robots.txt that points to it.
+ * A Sitemap line must hold an absolute URL, so the static file in public/ cannot have one itself.
+ */
+function crawlerFiles(site: string): Plugin {
+  let publicDir = '';
+  return {
+    name: 'xenlab-crawler-files',
+    apply: 'build',
+    configResolved(config) {
+      publicDir = config.publicDir;
+    },
+    async generateBundle() {
+      if (!site) return;
+      const robots = await this.fs.readFile(`${publicDir}/robots.txt`, { encoding: 'utf8' });
+      this.emitFile({
+        type: 'asset',
+        fileName: 'robots.txt',
+        source: `${robots.trimEnd()}\n\nSitemap: ${site}/sitemap.xml\n`,
+      });
+      const lastmod = new Date().toISOString().slice(0, 10);
+      const sitemap = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        `  <url><loc>${xmlEscape(`${site}/`)}</loc><lastmod>${lastmod}</lastmod></url>`,
+        '</urlset>',
+        '',
+      ].join('\n');
+      this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap });
+    },
+  };
+}
+
+const xmlEscape = (s: string) =>
+  s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[c]!);
 
 /** Fails the build on an ID the app would silently ignore (same check as ANALYTICS_ENABLED in src/analytics.ts). */
 function checkGaId(id: string) {
@@ -60,8 +117,9 @@ function checkGaId(id: string) {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', 'VITE_');
   checkGaId(env.VITE_GA_ID?.trim() ?? '');
+  const site = normalizeSite(env.VITE_SITE_URL ?? '');
   return {
-    plugins: [react(), shareMeta(env.VITE_SITE_URL ?? '')],
+    plugins: [react(), shareMeta(site), crawlerFiles(site)],
     server: { port: 5173 },
   };
 });

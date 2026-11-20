@@ -37,6 +37,13 @@ const pt: Messages = {
   'reset.cancel': 'Cancelar',
   'reset.done': 'Todas as configurações foram redefinidas.',
 
+  'about.title': 'Sobre o XenLab',
+  'about.intro': 'O XenLab é um laboratório microtonal gratuito no navegador. A maior parte da música ocidental divide a oitava em 12 passos iguais; com o XenLab você constrói outras afinações, ouve como elas soam e toca nelas, sem instalar nada e sem criar conta.',
+  'about.tunings': 'Uma afinação pode ser N-EDO (divisão igual da oitava, como 19-EDO, 31-EDO ou 53-EDO), EDx (divisão igual de outro intervalo, como Bohlen–Pierce: 13 passos da trítava 3/1), sua própria lista de cents ou razões, ou um arquivo .scl do Scala. Entre as afinações prontas estão a entonação justa, a afinação pitagórica e a série harmônica 8–16. A tabela de notas mostra cada grau em cents e Hz, a razão simples mais próxima com o seu erro e a nota de 12-TET mais próxima.',
+  'about.play': 'Toque pelo teclado do computador: as notas seguem a posição física das teclas, não as letras, então qualquer layout funciona (QWERTY, ABNT2, AZERTY…). Os graus seguem em ordem ao longo das fileiras ou formam um layout isomórfico como o Wicki–Hayden. Você também pode clicar ou tocar nas teclas da tela. Os navegadores só ativam o som depois de um clique ou de uma tecla, então pressione primeiro “{button}” ou qualquer tecla.',
+  'about.generator': 'O gerador toca música na afinação atual: “{demo}” percorre a escala, seus intervalos característicos e todos os acordes que soam bem na afinação; “{piece}” compõe uma progressão de acordes com melodia, como coral ou arpejos; “{pump}” toca I–vi–ii–V–I com intervalos puros, para você ouvir se a afinação tempera a coma sintônica 81/80.',
+  'about.local': 'O som é sintetizado no navegador com a Web Audio API: um oscilador com envelope e filtro, síntese aditiva ou um piano amostrado. As afinações e predefinições ficam salvas no navegador e podem ser exportadas como arquivos JSON ou .scl. O XenLab é software livre sob a licença AGPL-3.0.',
+
   'unit.hz': 'Hz',
   'unit.cents': '¢',
   'unit.ms': 'ms',

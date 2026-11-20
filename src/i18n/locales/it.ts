@@ -37,6 +37,13 @@ const it: Messages = {
   'reset.cancel': 'Annulla',
   'reset.done': 'Tutte le impostazioni sono state ripristinate.',
 
+  'about.title': 'Informazioni su XenLab',
+  'about.intro': 'XenLab è un laboratorio microtonale gratuito nel browser. Gran parte della musica occidentale divide l’ottava in 12 passi uguali; con XenLab puoi costruire altre accordature, sentire come suonano e suonarle, senza installare nulla e senza account.',
+  'about.tunings': 'Un’accordatura può essere N-EDO (divisione equabile dell’ottava, come 19-EDO, 31-EDO o 53-EDO), EDx (divisione equabile di un altro intervallo, come Bohlen–Pierce: 13 passi della tritava 3/1), un tuo elenco di cent o rapporti, oppure un file Scala .scl. Tra le accordature predefinite ci sono l’intonazione naturale, l’accordatura pitagorica e la serie armonica 8–16. La tabella delle note mostra ogni grado in cent e Hz, il rapporto semplice più vicino con il suo errore e la nota 12-TET più vicina.',
+  'about.play': 'Suona con la tastiera del computer: le note seguono la posizione fisica dei tasti, non le lettere, quindi va bene qualsiasi layout (QWERTY, AZERTY, QWERTZ…). I gradi si susseguono lungo le file oppure formano una disposizione isomorfa come Wicki–Hayden. Puoi anche cliccare o toccare i tasti sullo schermo. I browser avviano l’audio solo dopo un clic o la pressione di un tasto, quindi premi prima «{button}» o un tasto qualsiasi.',
+  'about.generator': 'Il generatore suona musica nell’accordatura attuale: «{demo}» percorre la scala, i suoi intervalli caratteristici e tutti gli accordi che suonano bene nell’accordatura; «{piece}» compone una progressione di accordi con una melodia, come corale o arpeggi; «{pump}» suona I–vi–ii–V–I con intervalli puri, così senti se l’accordatura tempera il comma sintonico 81/80.',
+  'about.local': 'Il suono è sintetizzato nel browser con la Web Audio API: un oscillatore con inviluppo e filtro, sintesi additiva o un pianoforte campionato. Accordature e preimpostazioni vengono salvate nel browser e si possono esportare in file JSON o .scl. XenLab è software libero con licenza AGPL-3.0.',
+
   'unit.hz': 'Hz',
   'unit.cents': '¢',
   'unit.ms': 'ms',

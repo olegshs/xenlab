@@ -37,6 +37,13 @@ const fr: Messages = {
   'reset.cancel': 'Annuler',
   'reset.done': 'Tous les réglages ont été réinitialisés.',
 
+  'about.title': 'À propos de XenLab',
+  'about.intro': 'XenLab est un bac à sable microtonal gratuit dans le navigateur. La plupart de la musique occidentale divise l’octave en 12 pas égaux ; XenLab vous permet de construire d’autres accordages, d’entendre comment ils sonnent et d’en jouer – sans installation ni compte.',
+  'about.tunings': 'Un accordage peut être un N-EDO (division égale de l’octave, comme 19-EDO, 31-EDO ou 53-EDO), un EDx (division égale d’un autre intervalle, comme Bohlen–Pierce : 13 pas de la tritave 3/1), votre propre liste de cents ou de rapports, ou un fichier Scala .scl. Les accordages prédéfinis comprennent l’intonation juste, l’accordage pythagoricien et la série harmonique 8–16. Le tableau des notes affiche chaque degré en cents et en Hz, le rapport simple le plus proche avec son écart et la note 12-TET la plus proche.',
+  'about.play': 'Jouez sur le clavier de l’ordinateur : les notes suivent la position physique des touches, pas les lettres, donc toute disposition convient (AZERTY, QWERTY, QWERTZ…). Les degrés se suivent le long des rangées ou forment une disposition isomorphe comme Wicki–Hayden. Vous pouvez aussi cliquer ou toucher les touches à l’écran. Les navigateurs ne démarrent le son qu’après un clic ou l’appui sur une touche ; appuyez donc d’abord sur « {button} » ou sur n’importe quelle touche.',
+  'about.generator': 'Le générateur joue de la musique dans l’accordage courant : « {demo} » parcourt la gamme, ses intervalles caractéristiques et tous les accords qui sonnent bien dans l’accordage ; « {piece} » compose une suite d’accords avec une mélodie, en choral ou en arpèges ; « {pump} » joue I–vi–ii–V–I en intervalles purs, pour entendre si l’accordage tempère le comma syntonique 81/80.',
+  'about.local': 'Le son est synthétisé dans le navigateur avec la Web Audio API : oscillateur avec enveloppe et filtre, synthèse additive ou piano échantillonné. Les accordages et les préréglages sont enregistrés dans votre navigateur et peuvent être exportés en JSON ou en .scl. XenLab est un logiciel libre sous licence AGPL-3.0.',
+
   'unit.hz': 'Hz',
   'unit.cents': '¢',
   'unit.ms': 'ms',

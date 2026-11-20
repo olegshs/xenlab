@@ -2,6 +2,8 @@
 
 A microtonal sandbox in the browser: build any tuning – 19-EDO, 31-EDO, Bohlen–Pierce, just intonation, a Scala file or your own list of ratios – and play it from your computer keyboard. Everything runs locally in the browser with the Web Audio API.
 
+**Try it online: [xenlab.brslr.top](https://xenlab.brslr.top/)**
+
 ## Features
 
 - **Tunings**
@@ -62,10 +64,10 @@ Build-time settings live in [.env](.env). Override them in `.env.local` (not com
 | Variable | Default | Purpose |
 |---|---|---|
 | `VITE_SOURCE_URL` | https://github.com/olegshs/xenlab | The **Source code** link in the footer. If you deploy a modified version, point it to your own source, as the AGPL requires. Empty hides the link. |
-| `VITE_SITE_URL` | (empty) | Public address of the site, e.g. `https://xenlab.example.com`. Makes the preview image URL absolute and adds `og:url` and a canonical link, which social networks need for link previews. |
+| `VITE_SITE_URL` | (empty) | Public address of the site, e.g. `https://xenlab.example.com`. Makes the preview image URL absolute and adds `og:url` and a canonical link, which social networks need for link previews. Also adds schema.org data for search engines and a `sitemap.xml`, listed in `robots.txt`. |
 | `VITE_GA_ID` | (empty) | Google Analytics 4 measurement ID (`G-…`, from Admin → Data streams; a Tag Manager `GTM-…` ID fails the build). Empty turns analytics off. Set it in `.env.local` or as a build argument rather than in `.env`, so that builds of forks do not report to your property. See [Analytics](#analytics). |
 
-The description, Open Graph and Twitter card tags are generated at build time by the `shareMeta` plugin in [vite.config.ts](vite.config.ts).
+The description, Open Graph and Twitter card tags are generated at build time by the `shareMeta` plugin in [vite.config.ts](vite.config.ts), and `sitemap.xml` by the `crawlerFiles` plugin next to it, which also adds the sitemap to the copy of [public/robots.txt](public/robots.txt) in the build.
 
 ## Analytics
 
@@ -113,12 +115,12 @@ docker build -t xenlab .
 docker run --rm -p 8080:8080 xenlab
 ```
 
-`dist/` is plain static files, so any static host works as well.
+The nginx in the image answers paths that are not files of the build with 404, so search engines do not see the page under endless other addresses. `dist/` is plain static files, so any static host works as well; the app has no client-side routes, so it needs no fallback to `index.html`.
 
 ## Project structure
 
 ```
-public/        favicon, app icons, web manifest and the social preview image (see npm run images)
+public/        favicon, app icons, web manifest, robots.txt and the social preview image (see npm run images)
 scripts/       render-images.mjs: generates the images in public/
 src/
   tuning/      tuning model, generators (EDO, EDx, lists), Scala parser, ratios, note names, presets

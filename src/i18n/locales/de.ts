@@ -37,6 +37,13 @@ const de: Messages = {
   'reset.cancel': 'Abbrechen',
   'reset.done': 'Alle Einstellungen wurden zurückgesetzt.',
 
+  'about.title': 'Über XenLab',
+  'about.intro': 'XenLab ist ein kostenloser mikrotonaler Sandkasten im Browser. Die meiste westliche Musik teilt die Oktave in 12 gleiche Schritte; mit XenLab bauen Sie andere Stimmungen, hören, wie sie klingen, und spielen darauf – ohne Installation und ohne Konto.',
+  'about.tunings': 'Eine Stimmung kann N-EDO sein (eine gleichmäßige Teilung der Oktave wie 19-EDO, 31-EDO oder 53-EDO), EDx (eine gleichmäßige Teilung eines anderen Intervalls, wie bei Bohlen–Pierce: 13 Schritte der Tritave 3/1), eine eigene Liste von Cent-Werten oder Verhältnissen oder eine Scala-Datei .scl. Zu den vorgefertigten Stimmungen gehören die reine Stimmung, die pythagoreische Stimmung und die Obertonreihe 8–16. Die Notentabelle zeigt jede Stufe in Cent und Hz, das nächste einfache Verhältnis mit seiner Abweichung und den nächsten Ton in 12-TET.',
+  'about.play': 'Gespielt wird auf der Computertastatur: Die Töne richten sich nach der physischen Lage der Tasten, nicht nach den Buchstaben, daher funktioniert jedes Tastaturlayout (QWERTZ, QWERTY, AZERTY, …). Die Stufen liegen der Reihe nach auf den Tastenreihen oder in einer isomorphen Anordnung wie Wicki–Hayden. Die Tasten auf dem Bildschirm lassen sich auch mit Maus oder Finger spielen. Browser starten den Ton erst nach einem Klick oder Tastendruck – drücken Sie also zuerst „{button}“ oder eine beliebige Taste.',
+  'about.generator': 'Der Generator spielt Musik in der aktuellen Stimmung: „{demo}“ geht die Tonleiter, ihre charakteristischen Intervalle und alle Akkorde durch, die in der Stimmung gut klingen; „{piece}“ komponiert eine Akkordfolge mit Melodie, als Choral oder Arpeggien; „{pump}“ spielt I–vi–ii–V–I aus reinen Intervallen, sodass man hört, ob die Stimmung das syntonische Komma 81/80 wegtemperiert.',
+  'about.local': 'Der Klang wird im Browser mit der Web Audio API erzeugt: ein Oszillator mit Hüllkurve und Filter, additive Synthese oder ein gesampeltes Klavier. Stimmungen und Voreinstellungen werden im Browser gespeichert und lassen sich als JSON- oder .scl-Dateien exportieren. XenLab ist freie Software unter der Lizenz AGPL-3.0.',
+
   'unit.hz': 'Hz',
   'unit.cents': 'Cent',
   'unit.ms': 'ms',

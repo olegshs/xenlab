@@ -1,6 +1,6 @@
 # Builds the image from the Dockerfile and serves XenLab on http://localhost:8080.
 #   XENLAB_PORT        host port (default 8080)
-#   XENLAB_SITE_URL    public address, for sharing previews (default: none)
+#   XENLAB_SITE_URL    public address, for link previews and search engines (default: none)
 #   XENLAB_SOURCE_URL  source code link (default: the one in .env)
 #   XENLAB_GA_ID       Google Analytics 4 measurement ID, asked for consent first (default: none, off)
 # Example: XENLAB_SITE_URL=https://xenlab.example.com docker compose up -d --build
